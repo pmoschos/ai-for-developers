@@ -1,0 +1,62 @@
+# -------------------------------------------------------
+# Dockerfile — Production-Ready FastAPI
+# -------------------------------------------------------
+#
+# This is a REFERENCE Dockerfile that students can study.
+# The actual Dockerfile used by this project is at the repo root.
+#
+# Build:  docker build -t fastapi-app .
+# Run:    docker run -d -p 8000:8000 fastapi-app
+#
+# Key decisions explained in comments below.
+# -------------------------------------------------------
+
+# --- Stage 1: Use a small base image ---
+# python:3.12-slim is ~150MB vs ~900MB for the full image.
+# Less surface area = fewer vulnerabilities.
+FROM python:3.12-slim
+
+# Set the working directory inside the container.
+WORKDIR /app
+
+# --- Environment variables ---
+# PYTHONDONTWRITEBYTECODE=1 → don't create .pyc files (saves space)
+# PYTHONUNBUFFERED=1 → print() output appears immediately in logs
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# --- Install dependencies first (Docker layer caching) ---
+# By copying requirements.txt BEFORE the app code, Docker can
+# cache the dependency installation layer. This means subsequent
+# builds are much faster if only your code changed.
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# --- Copy the application code ---
+# This layer changes more often, so it's placed AFTER dependencies.
+COPY ./app ./app
+
+# --- Expose the port ---
+# This is documentation — it tells other developers which port
+# the container listens on. It does NOT actually publish the port.
+EXPOSE 8000
+
+# --- Run the application ---
+# Use uvicorn directly for production.
+# --host 0.0.0.0 makes the server accessible from outside the container.
+# Do NOT use --reload in production.
+# For multiple workers, increase --workers or use gunicorn.
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# -------------------------------------------------------
+# Alternative: Multi-worker with Gunicorn (Linux only)
+# -------------------------------------------------------
+# CMD ["gunicorn", "app.main:app", \
+#      "-k", "uvicorn.workers.UvicornWorker", \
+#      "-w", "4", \
+#      "-b", "0.0.0.0:8000"]
+#
+# -k uvicorn.workers.UvicornWorker → use async Uvicorn workers
+# -w 4 → number of workers (rule of thumb: 2 × CPU + 1)
+# -b 0.0.0.0:8000 → bind address
+# -------------------------------------------------------
