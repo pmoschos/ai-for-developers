@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Advanced Python Architecture",
+    "author": "Ethan Cole",
+    "description": "A deep dive into scalable Python system design and clean architecture patterns.",
+    "rating": 5,
+    "published_date": 2023
+  },
+  {
+    "id": 2,
+    "title": "Building APIs with FastAPI",
+    "author": "Lena Hoffman",
+    "description": "Learn how to design high-performance REST APIs using FastAPI and async programming.",
+    "rating": 5,
+    "published_date": 2024
+  },
+  {
+    "id": 3,
+    "title": "Distributed Systems in Practice",
+    "author": "Marco Alvarez",
+    "description": "Covers real-world distributed system challenges including consistency and fault tolerance.",
+    "rating": 4,
+    "published_date": 2022
+  },
+  {
+    "id": 4,
+    "title": "The Mathematics of Machine Learning",
+    "author": "Sophia Turner",
+    "description": "An intuitive yet rigorous introduction to linear algebra, calculus, and probability in ML.",
+    "rating": 5,
+    "published_date": 2021
+  },
+  {
+    "id": 5,
+    "title": "History of Ancient Civilizations",
+    "author": "Daniel Brooks",
+    "description": "Explores the rise and fall of early human civilizations with a modern analytical perspective.",
+    "rating": 3,
+    "published_date": 2019
+  },
+  {
+    "id": 6,
+    "title": "Introduction to Algorithms and Complexity",
+    "author": "Nathan Reed",
+    "description": "A practical guide to algorithmic thinking, complexity analysis, and problem-solving strategies.",
+    "rating": 4,
+    "published_date": 2020
+  }
+]
