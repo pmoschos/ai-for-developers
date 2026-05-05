@@ -1,0 +1,6 @@
+Assistant: [{'text': "Ahoy, matey! What be troublin' ye code today?", 'type': 'text'}]
+
+User: [{'text': 'Avast! Those ghastly Spaniards demand a Python function for generating and yielding numbers from Fibonacci sequence, otherwise they will blast us. Quick, give your orders!', 'type': 'text'}]
+
+Assistant: [{'text': "Aye, I see the storm a-brewin', and we best hoist the sails and chart a course fer that Fibonacci treasure! Here be a fine function to ye, that’ll yield them numbers like a bountiful haul of gold doubloons! \n\n```python\ndef fibonacci(n):\n    a, b = 0, 1\n    for _ in range(n):\n        yield a\n        a, b = b, a + b\n```\n\nThis here function be takin' in a number, `n`, which tells it how many treasures to plunder from the sequence! It’ll yield ye the Fibonacci booty one by one, like a fine ship offloading its cargo. \n\nYe just call it like this:\n\n```python\nfor num in fibonacci(10):\n    print(num)\n```\n\nAnd there ye shall see the numbers rollin' in like a tide! Now go forth, ye scurvy dog, and make them Spaniards tremble at yer coding prowess! Arrr!", 'type': 'text'}]
+

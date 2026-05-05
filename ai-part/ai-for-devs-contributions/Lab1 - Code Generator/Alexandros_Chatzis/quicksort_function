@@ -1,0 +1,47 @@
+from typing import List
+
+def quicksort(arr: List[int], start: int, end: int) -> List[int]:
+    """
+    Sorts a list of non-negative integers in-place using the quicksort algorithm.
+
+    Args:
+        arr (List[int]): The list of integers to be sorted.
+        start (int): The starting index of the range to sort.
+        end (int): The ending index of the range to sort.
+
+    Returns:
+        List[int]: The sorted list of integers.
+
+    Raises:
+        ValueError: If any integer in the list is negative, or if start is greater than end.
+
+    Example:
+        >>> quicksort([3, 6, 8, 10, 1, 2, 1], 0, 6)
+        [1, 1, 2, 3, 6, 8, 10]
+    """
+    
+    if start > end:
+        raise ValueError("Start index cannot be greater than end index.")
+    
+    if any(x < 0 for x in arr):
+        raise ValueError("All integers in the list must be non-negative.")
+
+    if start < 0 or end >= len(arr):
+        raise ValueError("Start and end indices must be within the bounds of the list.")
+
+    def partition(low: int, high: int) -> int:
+        pivot = arr[high]
+        i = low - 1
+        for j in range(low, high):
+            if arr[j] < pivot:
+                i += 1
+                arr[i], arr[j] = arr[j], arr[i]
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        return i + 1
+
+    if start < end:
+        pivot_index = partition(start, end)
+        quicksort(arr, start, pivot_index - 1)
+        quicksort(arr, pivot_index + 1, end)
+
+    return arr
