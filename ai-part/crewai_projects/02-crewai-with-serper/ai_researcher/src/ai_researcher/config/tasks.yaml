@@ -1,0 +1,21 @@
+research_task:
+  description: >
+    Conduct thorough research about {topic}.
+    Find the most important concepts, tools, trends, examples, and practical use cases.
+    Organize your findings into clear sections.
+  expected_output: >
+    A structured research summary with key points, relevant examples,
+    important terminology, and practical observations about {topic}.
+  agent: researcher
+
+analysis_task:
+  description: >
+    Using the research findings, create a complete technical report about {topic}.
+    The report should be useful for a programmer or computer science teacher.
+    Include explanation, examples, practical recommendations, and possible next steps.
+  expected_output: >
+    A detailed markdown report with an introduction, core concepts,
+    practical examples, recommendations, and conclusion.
+  agent: analyst
+  markdown: true
+  output_file: output/report.md
