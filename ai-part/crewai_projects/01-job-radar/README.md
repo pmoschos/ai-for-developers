@@ -29,9 +29,7 @@ A multi-agent CrewAI pipeline that analyzes job market requirements, compares th
 
 ## 🏗️ Architecture
 
-```
 <img src="job-radar.JPG" width="50%" style="border-radius:10px;margin:12px 0;"/>
-```
 
 ---
 
