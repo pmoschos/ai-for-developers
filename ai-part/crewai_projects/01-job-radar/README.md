@@ -21,7 +21,8 @@ A multi-agent CrewAI pipeline that analyzes job market requirements, compares th
 
 ## 📸 Dashboard Preview
 
-<img src="the-flow.png" width="50%" style="border-radius:10px;margin:12px 0;"/>
+<img src="job-radar.JPG" width="100%" style="border-radius:10px;margin:12px 0;"/>
+
 
 *Replace the placeholder above with a screenshot of the app.py Gradio dashboard*
 
@@ -29,7 +30,7 @@ A multi-agent CrewAI pipeline that analyzes job market requirements, compares th
 
 ## 🏗️ Architecture
 
-<img src="job-radar.JPG" width="100%" style="border-radius:10px;margin:12px 0;"/>
+<img src="the-flow.png" width="50%" style="border-radius:10px;margin:12px 0;"/>
 
 ---
 
