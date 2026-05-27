@@ -1,0 +1,35 @@
+[project]
+name = "hitl-search-agent"
+version = "0.1.0"
+description = "Human-in-the-Loop Web Search Agent — Gradio + LangGraph + OpenAI + Tavily"
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "gradio>=4.0",
+    "langgraph>=0.3",
+    "langchain>=0.3",
+    "langchain-openai>=0.2",
+    "langchain-tavily>=0.1",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "tenacity>=8.0",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
