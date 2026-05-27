@@ -1,0 +1,48 @@
+{
+    "jobs": [
+        {
+            "company": "Jobgether",
+            "title": "Backend Developer (Python and FastAPI)",
+            "location": "Remote",
+            "salary_range": "$4,000 - $5,000 USD per month",
+            "apply_url": "https://www.linkedin.com/jobs/view/backend-developer-python-and-fastapi-europe-at-jobgether-4315484548",
+            "key_requirements": [
+                "Proven, recent hands-on experience developing production-level services with Python and FastAPI",
+                "Strong understanding of SQLAlchemy, PostgreSQL, and MongoDB",
+                "Solid working knowledge of Redis for caching, queues, or data pipelines"
+            ],
+            "years_experience_required": null,
+            "is_remote": true
+        },
+        {
+            "company": "YO HR Consultancy",
+            "title": "Python Backend Developer",
+            "location": "Remote",
+            "salary_range": "$15.00/hr - $38.00/hr",
+            "apply_url": "https://ie.linkedin.com/jobs/view/python-backend-developer-remote-at-yo-hr-consultancy-4042560075",
+            "key_requirements": [
+                "6+ years of experience in software development (purely backend)",
+                "Experience with server-side programming languages (Python, Go, Java, Ruby)",
+                "Strong experience with server-side MVC frameworks (e.g., Django)"
+            ],
+            "years_experience_required": "6+ years",
+            "is_remote": true
+        },
+        {
+            "company": "Jobgether",
+            "title": "Python Backend Engineer (Remote - Europe)",
+            "location": "Remote",
+            "salary_range": null,
+            "apply_url": "https://www.linkedin.com/jobs/view/python-backend-engineer-remote-europe-at-jobgether-4295172887",
+            "key_requirements": [
+                "Strong proficiency in Python with solid experience in Django or similar frameworks",
+                "Proven track record in developing and maintaining SaaS applications",
+                "Experience with relational and NoSQL databases, API design, and system integration"
+            ],
+            "years_experience_required": null,
+            "is_remote": true
+        }
+    ],
+    "total_found": 3,
+    "search_query_used": "Python Backend Developer job Remote — Europe"
+}

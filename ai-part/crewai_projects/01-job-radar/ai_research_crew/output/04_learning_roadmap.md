@@ -1,0 +1,1 @@
+The 90-day career roadmap has been successfully dispatched via email. The roadmap includes specific month-by-month learning tasks with real resources, a detailed portfolio project, and quick CV wins, fulfilling all requirements.

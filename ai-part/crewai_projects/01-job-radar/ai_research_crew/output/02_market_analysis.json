@@ -1,0 +1,58 @@
+{
+    "most_wanted_skills": [
+        {
+            "skill": "Python",
+            "frequency_pct": 100.0,
+            "is_critical": true
+        },
+        {
+            "skill": "FastAPI",
+            "frequency_pct": 33.33,
+            "is_critical": false
+        },
+        {
+            "skill": "Django",
+            "frequency_pct": 66.67,
+            "is_critical": true
+        },
+        {
+            "skill": "SQLAlchemy",
+            "frequency_pct": 33.33,
+            "is_critical": false
+        },
+        {
+            "skill": "PostgreSQL",
+            "frequency_pct": 33.33,
+            "is_critical": false
+        },
+        {
+            "skill": "MongoDB",
+            "frequency_pct": 33.33,
+            "is_critical": false
+        },
+        {
+            "skill": "Redis",
+            "frequency_pct": 33.33,
+            "is_critical": false
+        },
+        {
+            "skill": "NoSQL databases",
+            "frequency_pct": 33.33,
+            "is_critical": false
+        }
+    ],
+    "typical_tech_stack": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "SQLAlchemy",
+        "PostgreSQL",
+        "MongoDB",
+        "Redis"
+    ],
+    "median_salary": "$4,500 USD",
+    "salary_range_full": "$15.00/hr - $38.00/hr or $4,000 - $5,000 USD per month",
+    "experience_range": "6+ years",
+    "remote_ratio_pct": 100,
+    "market_summary": "The market for Python Backend Developers heavily favours candidates with strong Python skills and experience in Django, which appeared in 66.67% of listings. All positions were remote, offering a range from $15.00/hr to $38.00/hr or $4,000 to $5,000 USD per month. Common requirements include knowledge of FastAPI, SQLAlchemy, and databases like PostgreSQL and MongoDB."
+}

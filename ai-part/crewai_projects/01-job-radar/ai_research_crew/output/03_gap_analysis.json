@@ -1,0 +1,25 @@
+{
+    "readiness_score": 44,
+    "readiness_label": "Needs Work",
+    "skills_you_have": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL"
+    ],
+    "critical_gaps": [
+        "Django"
+    ],
+    "nice_to_have_gaps": [
+        "SQLAlchemy",
+        "MongoDB",
+        "Redis",
+        "NoSQL databases"
+    ],
+    "apply_now_jobs": [
+        "Backend Developer (Python and FastAPI) @ Jobgether"
+    ],
+    "apply_in_3_months": [
+        "Python Backend Engineer (Remote - Europe) @ Jobgether"
+    ],
+    "strengths_summary": "John already possesses strong skills in Python, FastAPI, and PostgreSQL, which align well with the requirements of remote backend development roles."
+}

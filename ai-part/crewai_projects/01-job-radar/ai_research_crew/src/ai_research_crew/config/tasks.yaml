@@ -1,0 +1,225 @@
+# =============================================================================
+# JobRadar - Task Definitions
+# =============================================================================
+# Each task maps to ONE agent and defines:
+#   description     - the detailed instructions for this task
+#   expected_output - what a GOOD output looks like (quality bar)
+#   agent           - which agent executes this task
+#   context         - which previous tasks' outputs this task can read
+#   output_file     - where to save the result
+#
+# Teaching note: `context` is the key mechanism for sharing data between agents.
+#   When gap_task has context: [hunt_task, analyse_task], the Gap Advisor agent
+#   automatically receives the outputs of both previous tasks as part of its context.
+#   This is how multi-agent pipelines share state without explicit passing.
+# =============================================================================
+
+hunt_task:
+  description: >
+    Search the internet for real, currently open job listings for:
+    Job Title: {job_title}
+    Location:  {location}
+
+    Execute these Tavily searches (one at a time):
+    1. "{job_title} job {location} 2024"
+    2. "{job_title} remote job Europe LinkedIn"
+    3. "{job_title} hiring {location} Indeed Glassdoor"
+    4. "{job_title} developer job remote.co weworkremotely"
+
+    For EACH job posting found, extract and record:
+    - company:                   The company's name (official, not a job board name)
+    - title:                     The exact job title as posted
+    - location:                  Exact location or "Remote" / "Hybrid"
+    - salary_range:              If displayed — otherwise leave null
+    - apply_url:                 The direct URL to the posting or application form
+    - key_requirements:          The COMPLETE list of required skills and technologies
+                                 from the requirements/qualifications section
+    - years_experience_required: Experience level if stated, else null
+    - is_remote:                 True if the role is remote or remote-friendly
+
+    Aim for 10-15 jobs. Minimum acceptable: 8 jobs.
+    Only include jobs posted in the last 60 days.
+    Skip any posting that does not have a requirements list.
+    Do not include duplicate companies unless the roles are significantly different.
+  expected_output: >
+    A structured list of 8-15 verified job postings. Every entry must have:
+    a company name, exact title, location, apply URL, and a requirements list
+    with at least 3 specific skills/technologies. The list must be diverse —
+    at least 5 different companies.
+  agent: job_hunter
+  output_file: output/01_job_listings.json
+
+analyse_task:
+  description: >
+    Analyse ALL job listings from the hunt task and produce data-driven market intelligence.
+
+    STEP 1 - Skill frequency count:
+    Go through EVERY job listing. For each skill/technology mentioned:
+    - Add it to your count table if not already there
+    - Increment its count by 1
+    Then calculate: frequency_pct = (count / total_jobs) × 100
+    Mark is_critical = True for all skills with frequency_pct > 50.
+    Sort the final list by frequency_pct (highest first).
+
+    STEP 2 - Tech stack:
+    Identify the top 5-8 technologies that form the core required stack.
+
+    STEP 3 - Salary analysis:
+    From listings that show salary:
+    - Find the lowest and highest figures
+    - Estimate the median (middle value when sorted)
+    - Format as strings, e.g. "€72,000" and "€50K–€100K"
+
+    STEP 4 - Experience range:
+    What years of experience do most listings require?
+    Express as a range, e.g. "2–5 years".
+
+    STEP 5 - Remote ratio:
+    Count how many listings are remote or remote-friendly.
+    Calculate: remote_ratio_pct = (remote_count / total_jobs) × 100
+
+    STEP 6 - Market summary:
+    Write 2-3 sentences in plain English describing what the market wants
+    for this role. Mention the most in-demand skills and any notable trends.
+
+    Every number must come from COUNTING the actual listings. Do not estimate.
+  expected_output: >
+    A ranked skills list where every entry has a name, exact frequency_pct
+    (as a number), and is_critical flag. Plus: tech stack, salary data,
+    experience range, remote ratio, and a market summary paragraph.
+    All figures must be traceable to the job listings provided.
+  agent: market_analyst
+  context:
+    - hunt_task
+  output_file: output/02_market_analysis.json
+
+gap_task:
+  description: >
+    Compare the market intelligence (from analyse_task) against the candidate's profile.
+
+    === CANDIDATE PROFILE ===
+    {my_cv}
+    =========================
+
+    Follow these steps precisely:
+
+    STEP 1 - Skills match:
+    List every skill from the market analysis that the candidate's profile mentions
+    (exact match OR a close equivalent — e.g. MySQL ≈ SQL, Flask ≈ web framework).
+    These go in skills_you_have.
+
+    STEP 2 - Critical gaps:
+    From all skills where is_critical = True, identify which ones are NOT in
+    the candidate's profile. These go in critical_gaps.
+    List them in order of frequency_pct (highest first = most important to learn).
+
+    STEP 3 - Nice-to-have gaps:
+    From skills with frequency_pct between 20 and 50 (not critical), identify
+    those absent from the candidate's profile. These go in nice_to_have_gaps.
+
+    STEP 4 - Readiness score:
+    readiness_score = round((len(skills_you_have that are critical) /
+                             len(all critical skills)) × 100)
+    Assign a label:
+      90-100 → "Ready to Apply"
+      70-89  → "Almost Ready"
+      40-69  → "Needs Work"
+      0-39   → "Early Stage"
+
+    STEP 5 - Apply now:
+    From the actual job listings (hunt_task output), identify which ones the
+    candidate CURRENTLY qualifies for based on their skills_you_have.
+    List as job title strings, e.g. "Junior Python Developer @ Acme Corp"
+
+    STEP 6 - Apply in 3 months:
+    Which jobs from the listings would they qualify for after learning the
+    top 3 critical gaps? List as job title strings.
+
+    STEP 7 - Strengths summary:
+    Write 1-2 sentences about what the candidate already does well,
+    based on their skills that match the market.
+
+    Be honest. Never say "consider improving" — say exactly what is missing
+    and cite the frequency_pct from the market data.
+  expected_output: >
+    An integer readiness_score (0-100) with label, categorised skill lists
+    (have / critical gaps / nice-to-have gaps), job lists for now and in
+    3 months, and a strengths summary sentence. Everything must cite specific
+    data from the job listings and market analysis.
+  agent: gap_advisor
+  context:
+    - hunt_task
+    - analyse_task
+  output_file: output/03_gap_analysis.json
+
+roadmap_task:
+  description: >
+    Write a personalised 90-day career roadmap in Markdown based on the gap analysis.
+    The roadmap must follow this EXACT structure:
+
+    ---
+    # Your 90-Day Career Roadmap: {job_title}
+
+    > **Readiness Score: [score]% — [label]**
+    > [strengths_summary sentence]
+
+    ## Apply RIGHT NOW
+    [List each apply_now_jobs item as a bullet]
+
+    ---
+
+    ## Month 1 - Learn: [#1 Critical Gap]
+    **Why:** This skill appears in [X]% of listings you cannot currently apply to.
+    **Resource:** [Exact course/tutorial name] — [URL] — [Free/Paid: price]
+    **Mini-project:** [Specific description: what to build, what it demonstrates]
+    **Time commitment:** [e.g. ~4 hours/week for 4 weeks]
+
+    ## Month 2 - Learn: [#2 Critical Gap]
+    [Same structure]
+
+    ## Month 3 - Learn: [#3 Critical Gap] + Portfolio Project
+    [Same structure for the gap]
+
+    **Portfolio Project:**
+    Build: [Very specific project description, e.g. "A FastAPI task management API
+    with PostgreSQL persistence, JWT authentication, Docker Compose setup, and
+    automatic API docs at /docs"]
+    This project will demonstrate: [list of skills it covers]
+    Host on: GitHub + deploy to [Railway / Render / Fly.io] (free tier)
+
+    ---
+
+    ## After 90 Days - Target These Roles
+    [List each apply_in_3_months item as a bullet]
+
+    ---
+
+    ## Quick CV Wins (Do These This Week)
+    - [ ] [Specific improvement 1 - e.g. "Rename 'Flask project' to 'REST API built with Flask, MySQL, deployed on Heroku'"]
+    - [ ] [Specific improvement 2]
+    - [ ] [Specific improvement 3]
+    - [ ] [Specific improvement 4]
+    - [ ] [Specific improvement 5]
+    ---
+
+    Rules:
+    - Every resource URL must be real and currently working
+    - Prioritise free resources (YouTube, freeCodeCamp, official docs, GitHub)
+    - The portfolio project must be specific enough that the student knows exactly what to build
+    - Language: encouraging, direct, no fluff
+    - Do NOT include skills from nice_to_have_gaps in the 90-day plan — focus on critical gaps only
+
+    After writing and saving this report, call the "Dispatch Roadmap Report" tool with:
+    - subject: "JobRadar Report: {job_title} — [readiness_score]% ready"
+    - body_markdown: the full Markdown report text
+    - alert_message: one sentence summary (max 200 chars)
+  expected_output: >
+    A complete, structured Markdown roadmap saved to output/04_learning_roadmap.md.
+    Every month has a specific skill, a real resource with URL, and a concrete mini-project.
+    The portfolio project is described in enough detail that a student can start building it
+    without further clarification. Notification dispatch confirmation included.
+  agent: roadmap_writer
+  context:
+    - analyse_task
+    - gap_task
+  output_file: output/04_learning_roadmap.md
