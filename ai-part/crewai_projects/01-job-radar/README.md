@@ -239,18 +239,6 @@ Each stage receives the output from the previous stage(s) as context, ensuring d
 
 ## 🐛 Troubleshooting
 
-### 403 Embedding Permission Error :
-Your API key doesn't have access to embeddings. Try:
-```python
-# In src/ai_research_crew/crew.py
-embedder={
-    "provider": "openai",
-    "config": {"model_name": "text-embedding-3-small"},  # Switch to smaller model
-}
-# Or temporarily disable memory:
-memory=False,
-```
-
 ### Missing Environment Variables :
 Ensure your `.env` contains:
 ```env
@@ -263,28 +251,6 @@ Your CV doesn't match any critical skills in the job market. Check `output/03_ga
 
 ---
 
-## 📖 Full Documentation
-
-For detailed setup, customization, and troubleshooting, see [instructions.md](./instructions.md).
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/my-feature`)
-3. Commit changes (`git commit -am 'Add my feature'`)
-4. Push to branch (`git push origin feature/my-feature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see [LICENSE](./LICENSE) for details.
-
----
 
 ## 🙏 Acknowledgments
 
@@ -294,14 +260,9 @@ This project is licensed under the MIT License — see [LICENSE](./LICENSE) for 
 - UI by [Gradio](https://www.gradio.app)
 - Notifications via [ntfy.sh](https://ntfy.sh) and [Resend](https://resend.com)
 
----
-
-## 📞 Support
-
-- 📖 **Documentation:** [instructions.md](./instructions.md)
-- 🐛 **Issues:** [GitHub Issues](../../issues)
-- 💬 **Questions:** Open a discussion or issue
 
 ---
 
-**Made with ❤️ for developers who want to understand the job market and close their skill gaps.**
+<p class="sender">
+  Made with ❤️ for AI for Developers - AUEB - Panagiotis Moschos
+</p>
