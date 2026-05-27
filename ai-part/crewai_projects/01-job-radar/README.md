@@ -263,6 +263,6 @@ Your CV doesn't match any critical skills in the job market. Check `output/03_ga
 
 ---
 
-<p class="sender">
-  Made with ❤️ for AI for Developers - AUEB - Panagiotis Moschos
+<p class="sender" style="text-align: center;">
+  Made with ❤️ for <strong>AI for Developers - AUEB - Panagiotis Moschos</strong>.
 </p>
